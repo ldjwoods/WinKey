@@ -2,7 +2,7 @@
 
 **Make macOS keyboard shortcuts work the Windows way.**
 
-[![CI](https://github.com/<your-username>/WinKey/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/WinKey/actions/workflows/ci.yml)
+[![CI](https://github.com/ldjwoods/WinKey/actions/workflows/ci.yml/badge.svg)](https://github.com/ldjwoods/WinKey/actions/workflows/ci.yml)
 ![Platform](https://img.shields.io/badge/platform-macOS%2013%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -60,7 +60,7 @@ Right-click / `Cmd`-click always opens the menu, so you can't lock yourself out.
 Requires macOS 13+.
 
 ```bash
-git clone https://github.com/<your-username>/WinKey.git
+git clone https://github.com/ldjwoods/WinKey.git
 cd WinKey
 
 # Optional but recommended: create a stable signing identity first, so the
@@ -325,7 +325,7 @@ Slack、Discord、微信、QQ 等）默认不介入。可在菜单逐项调整�
 需要 macOS 13+。
 
 ```bash
-git clone https://github.com/<你的用户名>/WinKey.git
+git clone https://github.com/ldjwoods/WinKey.git
 cd WinKey
 
 # 可选但强烈建议：先创建稳定的签名证书。
