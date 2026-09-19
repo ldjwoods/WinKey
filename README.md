@@ -56,8 +56,14 @@ Right-click / `Cmd`-click always opens the menu, so you can't lock yourself out.
 Requires macOS 13+.
 
 ```bash
-git clone <your-fork-url> WinKey
+git clone https://github.com/<your-username>/WinKey.git
 cd WinKey
+
+# Optional but recommended: create a stable signing identity first, so the
+# Accessibility grant survives rebuilds. Skip it and you'll re-authorize
+# after every build.
+./setup-signing.sh
+
 ./build.sh
 cp -R dist/WinKey.app /Applications/
 open /Applications/WinKey.app
@@ -204,6 +210,7 @@ Fix: rebuild synchronously in `statusItemClicked` **before** attaching the menu.
 ```
 WinKey/
 ├── build.sh                      # build + sign + bundle .app
+├── setup-signing.sh              # create a stable self-signed identity
 ├── Resources/
 │   ├── artwork.png               # source artwork for the icon
 │   ├── WinKey.icns               # app icon (orange plate)
@@ -302,8 +309,13 @@ Slack、Discord、微信、QQ 等）默认不介入。可在菜单逐项调整�
 需要 macOS 13+。
 
 ```bash
-git clone <你的仓库地址> WinKey
+git clone https://github.com/<你的用户名>/WinKey.git
 cd WinKey
+
+# 可选但强烈建议：先创建稳定的签名证书。
+# 不做这步的话，每次重新编译都要重新授权一次。
+./setup-signing.sh
+
 ./build.sh
 cp -R dist/WinKey.app /Applications/
 open /Applications/WinKey.app
