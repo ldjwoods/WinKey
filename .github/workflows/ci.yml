@@ -11,7 +11,7 @@ jobs:
   build-and-test:
     runs-on: macos-14
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Show toolchain
         run: |
@@ -66,7 +66,7 @@ jobs:
           test "$value" = "true" || { echo "LSUIElement must be true"; exit 1; }
 
       - name: Upload bundle
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: WinKey-adhoc-unsigned
           path: dist/WinKey.app
