@@ -1,0 +1,55 @@
+/* 国际化文案 */
+/* 如需新增语言，复制本文件为 <lang>.lproj/Localizable.strings 并翻译。 */
+
+"menu.needs_permission"     = "⚠️ 需要辅助功能权限才能生效";
+"menu.enable"               = "启用 WinKey";
+"menu.pause"                = "暂停 WinKey";
+"menu.section.shortcuts"    = "Windows 风格快捷键";
+"menu.section.navigation"   = "Windows 风格光标与窗口";
+"menu.section.exclude"      = "在这些应用中不生效（终端等）";
+"menu.reverse"              = "同时把 Cmd 反向映射为 Ctrl";
+"menu.login_item"           = "开机自动启动";
+"menu.about"                = "关于 WinKey";
+"menu.quit"                 = "退出";
+"menu.grant"                = "打开辅助功能设置…";
+
+/* 快捷键行为说明 */
+"beh.copy"        = "复制";
+"beh.paste"       = "粘贴";
+"beh.cut"         = "剪切";
+"beh.select_all"  = "全选";
+"beh.undo"        = "撤销";
+"beh.save"        = "保存";
+"beh.find"        = "查找";
+"beh.quit_app"    = "退出应用";
+"beh.close"       = "关闭窗口/标签";
+"beh.search"      = "搜索 / 资源管理器";
+"beh.find_next"   = "查找下一个";
+"beh.open"        = "打开";
+"beh.new_tab"     = "新建标签";
+"beh.underline"   = "下划线";
+"beh.print"       = "打印";
+"beh.bold"        = "加粗";
+"beh.refresh"     = "刷新";
+"beh.address_bar" = "聚焦地址栏";
+
+/* 光标导航（Ctrl+方向键，Windows 语义） */
+"nav.line_start"  = "行首（Windows Home）";
+"nav.line_end"    = "行尾（Windows End）";
+"nav.doc_start"   = "文稿开头";
+"nav.doc_end"     = "文稿结尾";
+"nav.word_left"   = "向左一个词";
+"nav.word_right"  = "向右一个词";
+"nav.window_switch" = "切换窗口（Windows Alt+Tab）";
+
+"about.title" = "WinKey";
+"about.body"  = "让 macOS 上的 Ctrl+C / Ctrl+V 等快捷键像 Windows 一样工作。\n\n把「辅助功能」权限授予本应用后即可全局生效。\n菜单里可以逐项开关每个映射。";
+"about.ok"    = "好";
+"tip.enabled" = "WinKey：已启用（Ctrl+C 等按 Windows 方式工作）";
+"tip.paused"  = "WinKey：已暂停";
+
+/* 总开关与最小化 */
+"menu.power"             = "启用 WinKey";
+"menu.section.minimize"  = "最小化前台应用";
+"min.hotkey"             = "快捷键 Ctrl+M";
+"min.click_menubar"      = "点击菜单栏图标（右键仍可开菜单）";

@@ -1,0 +1,53 @@
+/* WinKey localization */
+/* To add a language, copy this file to <lang>.lproj/Localizable.strings and translate. */
+
+"menu.needs_permission"     = "⚠️ Accessibility permission required";
+"menu.enable"               = "Enable WinKey";
+"menu.pause"                = "Pause WinKey";
+"menu.section.shortcuts"    = "Windows-style shortcuts";
+"menu.section.navigation"   = "Windows-style cursor & window";
+"menu.section.exclude"      = "Disabled in these apps (terminals, etc.)";
+"menu.reverse"              = "Also remap Cmd back to Ctrl";
+"menu.login_item"           = "Launch at login";
+"menu.about"                = "About WinKey";
+"menu.quit"                 = "Quit";
+"menu.grant"                = "Open Accessibility settings…";
+
+"beh.copy"        = "Copy";
+"beh.paste"       = "Paste";
+"beh.cut"         = "Cut";
+"beh.select_all"  = "Select All";
+"beh.undo"        = "Undo";
+"beh.save"        = "Save";
+"beh.find"        = "Find";
+"beh.quit_app"    = "Quit app";
+"beh.close"       = "Close window/tab";
+"beh.search"      = "Search / Explorer";
+"beh.find_next"   = "Find next";
+"beh.open"        = "Open";
+"beh.new_tab"     = "New tab";
+"beh.underline"   = "Underline";
+"beh.print"       = "Print";
+"beh.bold"        = "Bold";
+"beh.refresh"     = "Refresh";
+"beh.address_bar" = "Focus address bar";
+
+"nav.line_start"  = "Line start (Windows Home)";
+"nav.line_end"    = "Line end (Windows End)";
+"nav.doc_start"   = "Document start";
+"nav.doc_end"     = "Document end";
+"nav.word_left"   = "Word left";
+"nav.word_right"  = "Word right";
+"nav.window_switch" = "Switch window (Windows Alt+Tab)";
+
+"about.title" = "WinKey";
+"about.body"  = "Makes Ctrl+C / Ctrl+V and friends behave like Windows on macOS.\n\nGrant Accessibility permission and it works system-wide.\nEvery mapping can be toggled individually from the menu.";
+"about.ok"    = "OK";
+"tip.enabled" = "WinKey: active (Ctrl+C works the Windows way)";
+"tip.paused"  = "WinKey: paused";
+
+/* Power switch and minimize */
+"menu.power"             = "Enable WinKey";
+"menu.section.minimize"  = "Minimize frontmost app";
+"min.hotkey"             = "Shortcut Ctrl+M";
+"min.click_menubar"      = "Click menu bar icon (right-click opens menu)";

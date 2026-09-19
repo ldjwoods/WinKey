@@ -1,0 +1,22 @@
+# 构建产物
+.build/
+dist/
+*.app
+
+# 图标生成中间物
+Resources/*.iconset/
+
+# 验证工具的可执行文件（源码保留）
+tools/verify
+tools/logic_test
+tools/menu_state_test
+tools/renderswitch
+
+# macOS
+.DS_Store
+
+# Xcode / SwiftPM
+*.xcodeproj
+*.xcworkspace
+.swiftpm/
+Package.resolved
