@@ -2,6 +2,10 @@
 
 **Make macOS keyboard shortcuts work the Windows way.**
 
+[![CI](https://github.com/<your-username>/WinKey/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/WinKey/actions/workflows/ci.yml)
+![Platform](https://img.shields.io/badge/platform-macOS%2013%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 English · [中文说明见下方](#中文说明)
 
 A tiny native macOS menu-bar app that translates `Ctrl+C` / `Ctrl+V` / `Ctrl+X` /
@@ -68,6 +72,18 @@ cd WinKey
 cp -R dist/WinKey.app /Applications/
 open /Applications/WinKey.app
 ```
+
+### Prebuilt download
+
+Grab the latest zip from [Releases](../../releases), then **right-click → Open**
+the first launch (the build is ad-hoc signed, not notarized, so Gatekeeper warns
+once). Verify the download with the published checksum:
+
+```bash
+shasum -a 256 -c WinKey-*.zip.sha256
+```
+
+### Build from source
 
 Then grant **one** permission — macOS requires this and it cannot be automated:
 
@@ -320,6 +336,17 @@ cd WinKey
 cp -R dist/WinKey.app /Applications/
 open /Applications/WinKey.app
 ```
+
+### 直接下载
+
+从 [Releases](../../releases) 下载 zip，**首次启动需右键 → 打开**
+（构建是 ad-hoc 签名、未公证，Gatekeeper 会警告一次）。用发布的校验和验证：
+
+```bash
+shasum -a 256 -c WinKey-*.zip.sha256
+```
+
+### 从源码构建
 
 然后授权**一次**（macOS 强制要求，无法自动化）：
 

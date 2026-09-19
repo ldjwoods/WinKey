@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          sw_vers
+          swift --version
+          xcodebuild -version
+
+      # These suites are pure logic: no Accessibility permission and no GUI,
+      # so they run fine on a headless CI runner.
+      - name: Rule matrix tests
+        run: |
+          swiftc -O tools/logic_test.swift -o /tmp/logic_test
+          /tmp/logic_test
+
+      - name: Menu state timing test
+        run: |
+          swiftc -O tools/menu_state_test.swift -o /tmp/menu_state_test
+          /tmp/menu_state_test
+
+      - name: Validate localization files
+        run: |
+          for f in Resources/*.lproj/Localizable.strings; do
+            echo "checking $f"
+            plutil -lint "$f"
+          done
+
+      # CI has no self-signed identity, so build.sh takes its ad-hoc fallback
+      # path. That is exactly the path a new contributor hits, so exercising it
+      # here is useful rather than a compromise.
+      - name: Build app bundle
+        run: ./build.sh
+
+      - name: Verify bundle contents
+        run: |
+          set -e
+          APP=dist/WinKey.app
+          test -x "$APP/Contents/MacOS/WinKey"      || { echo "missing executable"; exit 1; }
+          test -f "$APP/Contents/Info.plist"        || { echo "missing Info.plist"; exit 1; }
+          test -f "$APP/Contents/Resources/WinKey.icns"    || { echo "missing app icon"; exit 1; }
+          test -f "$APP/Contents/Resources/MenuBarIcon.png" || { echo "missing menu bar icon"; exit 1; }
+          test -d "$APP/Contents/Resources/en.lproj"       || { echo "missing en.lproj"; exit 1; }
+          test -d "$APP/Contents/Resources/zh-Hans.lproj"  || { echo "missing zh-Hans.lproj"; exit 1; }
+          codesign --verify --verbose=2 "$APP"
+          echo "bundle looks good"
+
+      - name: Confirm the app is a menu-bar-only app
+        run: |
+          # LSUIElement must be true, otherwise a Dock icon appears and the
+          # app behaves like a regular windowed app.
+          value=$(/usr/libexec/PlistBuddy -c "Print :LSUIElement" dist/WinKey.app/Contents/Info.plist)
+          echo "LSUIElement = $value"
+          test "$value" = "true" || { echo "LSUIElement must be true"; exit 1; }
+
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: WinKey-adhoc-unsigned
+          path: dist/WinKey.app
+          retention-days: 7

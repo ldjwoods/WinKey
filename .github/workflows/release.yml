@@ -1,0 +1,109 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag to build (e.g. v1.0.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            echo "tag=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run tests
+        run: |
+          swiftc -O tools/logic_test.swift -o /tmp/logic_test && /tmp/logic_test
+          swiftc -O tools/menu_state_test.swift -o /tmp/menu_state_test && /tmp/menu_state_test
+
+      - name: Build
+        run: ./build.sh
+
+      - name: Package
+        id: package
+        run: |
+          set -e
+          NAME="WinKey-${{ steps.version.outputs.tag }}"
+          mkdir -p "$NAME"
+          cp -R dist/WinKey.app "$NAME/"
+          cp README.md LICENSE "$NAME/"
+          # Include the source tree so users who'd rather not trust a binary
+          # can build it themselves.
+          zip -qry "${NAME}.zip" "$NAME"
+          # Must be the standard "hash  filename" form — `shasum -c` rejects a
+          # bare hash, and the release notes tell users to run `shasum -c`.
+          shasum -a 256 "${NAME}.zip" > "${NAME}.zip.sha256"
+          shasum -a 256 -c "${NAME}.zip.sha256"
+          echo "archive=${NAME}.zip" >> "$GITHUB_OUTPUT"
+          echo "checksum=${NAME}.zip.sha256" >> "$GITHUB_OUTPUT"
+          ls -la "${NAME}.zip"
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > notes.md <<'NOTES'
+          ## Install
+
+          1. Download `WinKey-*.zip` below and unzip it.
+          2. Move `WinKey.app` to `/Applications`.
+          3. **Right-click the app and choose Open** the first time. macOS blocks
+             apps that aren't notarized; right-clicking lets you approve it once.
+             Double-clicking will just show a warning.
+          4. Grant Accessibility permission when prompted:
+             *System Settings › Privacy & Security › Accessibility*.
+
+          ## Verify the download
+
+          ```bash
+          shasum -a 256 -c WinKey-*.zip.sha256
+          ```
+
+          ## Note on signing
+
+          This build is **ad-hoc signed, not notarized** — there is no Apple
+          Developer certificate behind it, so Gatekeeper will warn on first
+          launch. That is expected, not a sign of tampering; the checksum above
+          is how you verify integrity.
+
+          If you'd rather not run an unnotarized binary, build from source
+          instead:
+
+          ```bash
+          ./setup-signing.sh   # optional: stable identity, authorize once
+          ./build.sh
+          ```
+
+          ## Requirements
+
+          macOS 13 or later.
+          NOTES
+
+          if gh release view "${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+            gh release upload "${{ steps.version.outputs.tag }}" \
+              "${{ steps.package.outputs.archive }}" \
+              "${{ steps.package.outputs.checksum }}" --clobber
+          else
+            gh release create "${{ steps.version.outputs.tag }}" \
+              "${{ steps.package.outputs.archive }}" \
+              "${{ steps.package.outputs.checksum }}" \
+              --title "WinKey ${{ steps.version.outputs.tag }}" \
+              --notes-file notes.md
+          fi
